@@ -1,20 +1,20 @@
 <template>
-  <form @submit.prevent :class="[$style.form, $style[`form_${sex}`]]">
+  <form @submit.prevent :class="[$style.form, $style[`form_${parent}`]]">
     <input
       type="text"
       :class="$style.input"
       placeholder="Введите имя"
-      v-model="name"
+      v-model="objName.name"
     />
     <input
       type="text"
       :class="$style.input"
       placeholder="Введите рейтинг имени"
-      v-model="rating"
+      v-model.number="objName.rating"
     />
     <button
       @click="addName"
-      :class="[$style.button, $style[`button_${sex}`]]"
+      :class="[$style.button, $style[`button_${parent}`]]"
       :disabled="!formValid"
     >
       Добавить имя
@@ -25,25 +25,33 @@
 <script>
 export default {
   props: {
-    sex: {
+    parent: {
       type: String,
-      default: "male",
+      default: "mom",
     },
   },
   data() {
     return {
-      name: "",
-      rating: "",
+      objName: {
+        name: "",
+        rating: "",
+      },
     };
   },
   computed: {
     formValid() {
-      return this.name.length > 2 && this.rating >= 1;
+      return this.objName.name.length > 2 && this.objName.rating >= 1;
     },
   },
   methods: {
     addName() {
-      console.log("name");
+      if (this.formValid) {
+        this.$emit("add", this.objName);
+      }
+      this.objName = {
+        name:"",
+        rating:"",
+      };
     },
   },
 };
@@ -52,16 +60,17 @@ export default {
 <style lang="scss" module>
 .form {
   width: 360px;
-  padding: 48px 24px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 16px;
   border-radius: 20px;
-  &_female {
+
+  &_mom {
     background-color: $pink;
   }
 
-  &_male {
+  &_dad {
     background-color: $blue;
   }
 }
@@ -88,11 +97,11 @@ export default {
     opacity: 0.8;
   }
 
-  &_female {
+  &_mom {
     background-color: $dark-pink;
   }
 
-  &_male {
+  &_dad {
     background-color: $dark-blue;
   }
 }
