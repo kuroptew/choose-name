@@ -12,30 +12,38 @@ export default {
   },
   methods: {
     deleteName(name) {
-      console.log('delete',name);
+      this.$emit("delete", name);
     },
   },
 };
 </script>
 
 <template>
-  <ul :class="[$style['list-names'], $style[`list-names_${parent}`]]">
-    <li
-      v-for="name in names"
-      :key="name"
-      :class="[$style['item-name'], $style[`item-name_${parent}`]]"
-    >
-      <span :class="$style.name">{{ name.name }}</span>
-      <span :class="$style.rating">{{ name.rating }}</span>
-      <button 
-      @click="deleteName(name)"
-      :class="$style['button-delete']">Удалить имя</button>
-    </li>
-  </ul>
+  <table :class="[$style['table-names'], $style[`table-names_${parent}`]]">
+    <thead>
+      <th>Имя</th>
+      <th>Рейтинг</th>
+    </thead>
+    <tbody>
+      <tr
+        v-for="name in names"
+        :key="name.value"
+        :class="[$style['item-name'], $style[`item-name_${parent}`]]"
+      >
+        <td :class="$style.name">{{ name.value }}</td>
+        <td :class="$style.rating">{{ name.rating }}</td>
+        <td>
+          <button @click="deleteName(name)" :class="$style['button-delete']">
+            Удалить имя
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <style lang="scss" module>
-.list-names {
+.table-names {
   display: flex;
   padding: 20px;
   border-radius: 20px;
@@ -48,11 +56,17 @@ export default {
   &_dad {
     background-color: $blue;
   }
+
+  thead {
+    display: flex;
+    gap: 80px;
+    color: #fff;
+  }
 }
 
 .item-name {
   display: flex;
-  justify-content: space-between;
+  gap: 80px;
   align-items: center;
   padding: 8px 0;
   color: #fff;
@@ -63,6 +77,10 @@ export default {
 
   &_dad:not(:last-child) {
     border-bottom: 2px solid $dark-blue;
+  }
+
+  td {
+    display: block;
   }
 }
 

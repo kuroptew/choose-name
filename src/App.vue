@@ -1,19 +1,14 @@
 <script>
 import FormName from "./components/FormName.vue";
 import ListNames from "./components/ListNames.vue";
+import { addNewName, getNames, deleteName } from "./api";
 
 export default {
   components: { FormName, ListNames },
   data() {
     return {
-      namesByMom: [
-        { name: "Кира", rating: 10 },
-        { name: "Ира", rating: 2 },
-      ],
-      namesByDad: [
-        { name: "Кира", rating: 10 },
-        { name: "Ира", rating: 2 },
-      ],
+      namesByMom: [],
+      namesByDad: [],
     };
   },
   computed: {
@@ -27,10 +22,30 @@ export default {
   methods: {
     addNameByMom(name) {
       this.namesByMom.push(name);
+      addNewName("namesByMom", name);
     },
     addNameByDad(name) {
       this.namesByDad.push(name);
+      addNewName("namesByDad", name);
     },
+    deleteNameByMom(name) {
+      this.namesByMom = this.namesByMom.filter((n) => n.id !== name.id);
+      deleteName("namesByMom", name);
+    },
+    deleteNameByDad(name) {
+      this.namesByDad = this.namesByDad.filter((n) => n.id !== name.id);
+      deleteName("namesByDad", name);
+    },
+    async fetchNamesByMom() {
+      this.namesByMom = await getNames("namesByMom");
+    },
+    async fetchNamesByDad() {
+      this.namesByDad = await getNames("namesByDad");
+    },
+  },
+  mounted() {
+    this.fetchNamesByMom();
+    this.fetchNamesByDad();
   },
 };
 </script>
@@ -40,30 +55,35 @@ export default {
     <h1 :class="$style.title">Выбираем имя ребенку</h1>
     <div :class="$style.content">
       <div :class="$style['container_mom']">
-        <form-name :parent="'mom'" @add="addNameByMom"/>
-        <h2
-          v-if="hasNamesByMom"
-          :class="[$style.subtitle, $style['subtitle_mom']]"
-        >
-          Имена от мамы
-        </h2>
+        <form-name :parent="'mom'" @add="addNameByMom" />
+        <template v-if="hasNamesByMom">
+          <h2 :class="[$style.subtitle, $style['subtitle_mom']]">
+            Имена от мамы
+          </h2>
+          <list-names
+            :names="namesByMom"
+            :parent="'mom'"
+            @delete="deleteNameByMom"
+          />
+        </template>
         <h2 v-else :class="[$style.subtitle, $style['subtitle_mom']]">
           От мамы нет имен
         </h2>
-        <list-names :names="namesByMom" :parent="'mom'" />
       </div>
       <div :class="$style['container_dad']">
-        <form-name :parent="'dad'" @add="addNameByDad"/>
-        <h2
-          v-if="hasNamesByDad"
-          :class="[$style.subtitle, $style['subtitle_dad']]"
-        >
-          Имена от папы
-        </h2>
+        <form-name :parent="'dad'" @add="addNameByDad" />
+        <template v-if="hasNamesByDad">
+          <h2 :class="[$style.subtitle, $style['subtitle_dad']]">
+            Имена от папы
+          </h2>
+          <list-names 
+          :names="namesByDad" 
+          :parent="'dad'"
+          @delete="deleteNameByDad" />
+        </template>
         <h2 v-else :class="[$style.subtitle, $style['subtitle_dad']]">
           От папы имен нет
         </h2>
-        <list-names v-if="hasNamesByDad" :names="namesByDad" :parent="'dad'" />
       </div>
     </div>
   </div>

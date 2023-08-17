@@ -4,26 +4,25 @@
       type="text"
       :class="$style.input"
       placeholder="Введите имя"
-      v-model="objName.name"
+      v-model="name.value"
     />
     <input
       type="text"
       :class="$style.input"
       placeholder="Введите рейтинг имени"
-      v-model.number="objName.rating"
+      v-model.number="name.rating"
     />
-    <button
-      @click="addName"
-      :class="[$style.button, $style[`button_${parent}`]]"
-      :disabled="!formValid"
-    >
-      Добавить имя
-    </button>
+    <button-add-name :disabled="!formValid"  @click="addName" :parent="parent" />
   </form>
 </template>
 
 <script>
+import { v4 as uuidv4 } from "uuid";
+
+import ButtonAddName from "./ButtonAddName.vue";
+
 export default {
+  components: { ButtonAddName },
   props: {
     parent: {
       type: String,
@@ -32,25 +31,27 @@ export default {
   },
   data() {
     return {
-      objName: {
-        name: "",
+      name: {
+        value: "",
         rating: "",
       },
     };
   },
   computed: {
     formValid() {
-      return this.objName.name.length > 2 && this.objName.rating >= 1;
+      return this.name.value.length >= 2 && this.name.rating >= 1;
     },
   },
   methods: {
     addName() {
       if (this.formValid) {
-        this.$emit("add", this.objName);
+        this.name.id = uuidv4();
+        this.$emit("add", this.name);
       }
-      this.objName = {
-        name:"",
-        rating:"",
+      this.name = {
+        value: "",
+        rating: "",
+        id: "",
       };
     },
   },
@@ -63,7 +64,9 @@ export default {
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   border-radius: 20px;
 
   &_mom {
@@ -76,6 +79,7 @@ export default {
 }
 
 .input {
+  width: 100%;
   padding: 8px;
   border-radius: 4px;
   border: none;
@@ -84,25 +88,6 @@ export default {
 
   &::placeholder {
     color: $beige;
-  }
-}
-
-.button {
-  padding: 12px;
-  border-radius: 8px;
-  color: $black;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.8;
-  }
-
-  &_mom {
-    background-color: $dark-pink;
-  }
-
-  &_dad {
-    background-color: $dark-blue;
   }
 }
 </style>
