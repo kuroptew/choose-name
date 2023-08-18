@@ -1,23 +1,3 @@
-<script>
-export default {
-  props: {
-    names: {
-      type: Array,
-      required: true,
-    },
-    parent: {
-      type: String,
-      default: "mom",
-    },
-  },
-  methods: {
-    deleteName(name) {
-      this.$emit("delete", name);
-    },
-  },
-};
-</script>
-
 <template>
   <table :class="[$style['table-names'], $style[`table-names_${parent}`]]">
     <thead>
@@ -42,6 +22,26 @@ export default {
   </table>
 </template>
 
+<script>
+export default {
+  props: {
+    names: {
+      type: Array,
+      required: true,
+    },
+    parent: {
+      type: String,
+      default: "mom",
+    },
+  },
+  methods: {
+    deleteName(name) {
+      this.$emit("delete", name);
+    },
+  },
+};
+</script>
+
 <style lang="scss" module>
 .table-names {
   display: flex;
@@ -49,7 +49,6 @@ export default {
   border-radius: 20px;
   margin-top: 24px;
   flex-direction: column;
-  list-style: none;
   &_mom {
     background-color: $pink;
   }
@@ -60,7 +59,7 @@ export default {
   thead {
     display: block;
     width: 100%;
-    color: #fff;
+    color: $white;
 
     th {
       display: inline-block;
@@ -73,14 +72,31 @@ export default {
   display: block;
   width: 100%;
   padding: 8px 0;
-  color: #fff;
 
-  &_mom:not(:last-child) {
-    border-bottom: 2px solid $dark-pink;
+  &_mom {
+    color: $dark-pink;
+    &:not(:last-child) {
+      border-bottom: 2px solid $dark-pink;
+    }
+
+    td {
+      .button-delete {
+        color: $dark-pink;
+      }
+    }
   }
 
-  &_dad:not(:last-child) {
-    border-bottom: 2px solid $dark-blue;
+  &_dad {
+    color: $dark-blue;
+    &:not(:last-child) {
+      border-bottom: 2px solid $dark-blue;
+    }
+
+    td {
+      .button-delete {
+        color: $dark-blue;
+      }
+    }
   }
 
   td {
@@ -91,13 +107,13 @@ export default {
 }
 
 .name,
-.rating {
+.rating,
+.button-delete {
   @include font-size(16, 20);
 }
 
 .button-delete {
   background: transparent;
-  color: #fff;
   cursor: pointer;
 }
 </style>

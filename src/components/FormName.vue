@@ -68,17 +68,23 @@ export default {
   align-items: center;
   gap: 20px;
   border-radius: 20px;
-
   &_mom {
     background-color: $pink;
+
+    .input:focus {
+      outline-color: $dark-pink;
+    }
   }
 
   &_dad {
     background-color: $blue;
-  }
-}
 
-.input {
+    .input:focus {
+      outline-color: $dark-blue;
+    }
+  }
+
+  .input {
   width: 100%;
   padding: 8px;
   border-radius: 4px;
@@ -90,4 +96,6 @@ export default {
     color: $beige;
   }
 }
+}
+
 </style>

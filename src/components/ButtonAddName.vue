@@ -1,3 +1,13 @@
+<template>
+  <button :class="[$style['button-add'], $style[`button-add_${parent}`]]">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    Добавить имя
+  </button>
+</template>
+
 <script>
 export default {
   props: {
@@ -8,16 +18,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <button :class="[$style['button-add'], $style[`button-add_${parent}`]]">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    Добавить имя
-  </button>
-</template>
 
 <style lang="scss" module>
 .button-add {
@@ -72,21 +72,21 @@ export default {
       top: -2px;
       right: -2px;
       transform: rotate(90deg);
-      transition-delay: 0.1s;
+      transition-delay: 0.2s;
     }
 
     &:nth-child(3) {
       bottom: -2px;
       right: -2px;
       transform: rotate(180deg);
-      transition-delay: 0.2s;
+      transition-delay: 0.4s;
     }
 
     &:nth-child(4) {
       bottom: -2px;
       left: -2px;
       transform: rotate(-90deg);
-      transition-delay: 0.3s;
+      transition-delay: 0.6s;
     }
   }
 

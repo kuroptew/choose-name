@@ -1,4 +1,16 @@
 {
-  "namesByMom": [],
-  "namesByDad": []
+  "namesByMom": [
+    {
+      "value": "Аня",
+      "rating": 3,
+      "id": "504ec958-2978-4742-b766-eb8292c0007a"
+    }
+  ],
+  "namesByDad": [
+    {
+      "value": "Катя",
+      "rating": 4,
+      "id": "a6944d12-80e4-4a1e-b9ce-7d4c85f32e81"
+    }
+  ]
 }

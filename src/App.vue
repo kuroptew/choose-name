@@ -1,11 +1,32 @@
+<template>
+  <div :class="$style.container">
+    <h1 :class="$style.title">Выбираем имя ребенку</h1>
+    <section :class="$style['section-parents']">
+      <section-parent
+        :names="namesByMom"
+        :parent="'mom'"
+        @delete="deleteNameByMom"
+        @add="addNameByMom"
+      />
+      <section-parent
+        :names="namesByDad"
+        :parent="'dad'"
+        @delete="deleteNameByDad"
+        @add="addNameByDad"
+      />
+    </section>
+    <section-child :names="commonNames" />
+  </div>
+</template>
+
 <script>
-import FormName from "./components/FormName.vue";
-import TableNames from "./components/TableNames.vue";
 import SectionParent from "./components/SectionParent.vue";
+import SectionChild from "./components/SectionChild.vue";
+
 import { addNewName, getNames, deleteName } from "./api";
 
 export default {
-  components: { FormName, TableNames, SectionParent },
+  components: { SectionParent, SectionChild },
   data() {
     return {
       namesByMom: [],
@@ -13,11 +34,25 @@ export default {
     };
   },
   computed: {
-    hasNamesByMom() {
-      return this.namesByMom.length > 0;
-    },
-    hasNamesByDad() {
-      return this.namesByDad.length > 0;
+    commonNames() {
+      return this.namesByMom.reduce((commonNames, nameByMom) => {
+        const indexNameByDad = this.namesByDad.findIndex(
+          (nameByDad) => nameByDad.value === nameByMom.value
+        );
+
+        if (indexNameByDad !== -1) {
+          const nameByDad = this.namesByDad[indexNameByDad];
+
+          const commonName = {
+            id: nameByDad.id + nameByMom.id,
+            value: nameByDad.value,
+            rating: nameByDad.rating + nameByMom.rating,
+          };
+
+          commonNames.push(commonName);
+        }
+        return commonNames;
+      }, []);
     },
   },
   methods: {
@@ -50,26 +85,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div :class="$style.container">
-    <h1 :class="$style.title">Выбираем имя ребенку</h1>
-    <section :class="$style['section-parents']">
-      <section-parent
-        :names="namesByMom"
-        :parent="'mom'"
-        @delete="deleteNameByMom"
-        @add="addNameByMom"
-      />
-      <section-parent
-        :names="namesByDad"
-        :parent="'dad'"
-        @delete="deleteNameByDad"
-        @add="addNameByDad"
-      />
-    </section>
-  </div>
-</template>
 
 <style lang="scss" module>
 .container {
