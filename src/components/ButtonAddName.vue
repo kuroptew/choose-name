@@ -1,13 +1,3 @@
-<template>
-  <button :class="[$style['button-add'], $style[`button-add_${parent}`]]">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    Добавить имя
-  </button>
-</template>
-
 <script>
 export default {
   props: {
@@ -18,6 +8,16 @@ export default {
   },
 };
 </script>
+
+<template>
+  <button :class="[$style['button-add'], $style[`button-add_${parent}`]]">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    Добавить имя
+  </button>
+</template>
 
 <style lang="scss" module>
 .button-add {

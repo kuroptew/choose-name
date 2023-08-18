@@ -58,16 +58,20 @@ export default {
   }
 
   thead {
-    display: flex;
-    gap: 80px;
+    display: block;
+    width: 100%;
     color: #fff;
+
+    th {
+      display: inline-block;
+      width: 33%;
+    }
   }
 }
 
 .item-name {
-  display: flex;
-  gap: 80px;
-  align-items: center;
+  display: block;
+  width: 100%;
   padding: 8px 0;
   color: #fff;
 
@@ -80,7 +84,9 @@ export default {
   }
 
   td {
-    display: block;
+    display: inline-block;
+    width: 33%;
+    text-align: center;
   }
 }
 

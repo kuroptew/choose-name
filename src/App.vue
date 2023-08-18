@@ -1,10 +1,11 @@
 <script>
 import FormName from "./components/FormName.vue";
-import ListNames from "./components/ListNames.vue";
+import TableNames from "./components/TableNames.vue";
+import SectionParent from "./components/SectionParent.vue";
 import { addNewName, getNames, deleteName } from "./api";
 
 export default {
-  components: { FormName, ListNames },
+  components: { FormName, TableNames, SectionParent },
   data() {
     return {
       namesByMom: [],
@@ -53,39 +54,20 @@ export default {
 <template>
   <div :class="$style.container">
     <h1 :class="$style.title">Выбираем имя ребенку</h1>
-    <div :class="$style.content">
-      <div :class="$style['container_mom']">
-        <form-name :parent="'mom'" @add="addNameByMom" />
-        <template v-if="hasNamesByMom">
-          <h2 :class="[$style.subtitle, $style['subtitle_mom']]">
-            Имена от мамы
-          </h2>
-          <list-names
-            :names="namesByMom"
-            :parent="'mom'"
-            @delete="deleteNameByMom"
-          />
-        </template>
-        <h2 v-else :class="[$style.subtitle, $style['subtitle_mom']]">
-          От мамы нет имен
-        </h2>
-      </div>
-      <div :class="$style['container_dad']">
-        <form-name :parent="'dad'" @add="addNameByDad" />
-        <template v-if="hasNamesByDad">
-          <h2 :class="[$style.subtitle, $style['subtitle_dad']]">
-            Имена от папы
-          </h2>
-          <list-names 
-          :names="namesByDad" 
-          :parent="'dad'"
-          @delete="deleteNameByDad" />
-        </template>
-        <h2 v-else :class="[$style.subtitle, $style['subtitle_dad']]">
-          От папы имен нет
-        </h2>
-      </div>
-    </div>
+    <section :class="$style['section-parents']">
+      <section-parent
+        :names="namesByMom"
+        :parent="'mom'"
+        @delete="deleteNameByMom"
+        @add="addNameByMom"
+      />
+      <section-parent
+        :names="namesByDad"
+        :parent="'dad'"
+        @delete="deleteNameByDad"
+        @add="addNameByDad"
+      />
+    </section>
   </div>
 </template>
 
@@ -101,21 +83,7 @@ export default {
   text-align: center;
 }
 
-.subtitle {
-  margin-top: 16px;
-  @include font-size(32, 38);
-  text-align: center;
-
-  &_mom {
-    color: $dark-pink;
-  }
-
-  &_dad {
-    color: $dark-blue;
-  }
-}
-
-.content {
+.section-parents {
   display: flex;
   justify-content: space-between;
 }
