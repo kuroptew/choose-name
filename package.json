@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://kuroptew.github.io/choose-name/",
   "scripts": {
     "dev": "concurrently \"vite\" \"npx json-server db.json --port 3001\"",
     "build": "vite build",
