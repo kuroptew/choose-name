@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://my-json-server.typicode.com/kuroptew/child-names/";
 
 export async function getNames(namesBy) {
   try {
