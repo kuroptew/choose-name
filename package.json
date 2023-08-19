@@ -15,7 +15,8 @@
     "axios": "^1.4.0",
     "concurrently": "^8.2.0",
     "uuid": "^9.0.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vuetify": "^3.3.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

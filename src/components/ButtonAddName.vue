@@ -30,11 +30,61 @@ export default {
   text-decoration: none;
   outline: none;
   background-color: inherit;
-
   cursor: pointer;
+
+  span:nth-child(1) {
+    top: -2px;
+      left: -2px;
+    transform: rotate(180deg);
+    background: transparent;
+  }
+
+  span:nth-child(2) {
+    top: -2px;
+      right: -2px;
+    transform: rotate(270deg);
+    background: transparent;
+  }
+
+  span:nth-child(3) {
+    bottom: -2px;
+      right: -2px;
+    transform: rotate(0deg);
+    background: transparent;
+  }
+
+  span:nth-child(4) {
+    bottom: -2px;
+      left: -2px;
+    transform: rotate(90deg);
+    background: transparent;
+  }
 
   &:disabled {
     opacity: 0.5;
+
+    span:nth-child(1) {
+      transform: rotate(0);
+    }
+
+    span:nth-child(2) {
+      transform: rotate(90deg);
+    }
+
+    span:nth-child(3) {
+      transform: rotate(180deg);
+    }
+
+    span:nth-child(4) {
+      transform: rotate(-90deg);
+    }
+  }
+
+  span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transition: 0.5s;
   }
 
   &_mom {
@@ -54,61 +104,6 @@ export default {
     span {
       border-bottom: 2px solid $dark-blue;
       border-right: 2px solid $dark-blue;
-    }
-  }
-
-  span {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    transition: 0.5s;
-
-    &:nth-child(1) {
-      top: -2px;
-      left: -2px;
-    }
-
-    &:nth-child(2) {
-      top: -2px;
-      right: -2px;
-      transform: rotate(90deg);
-      transition-delay: 0.2s;
-    }
-
-    &:nth-child(3) {
-      bottom: -2px;
-      right: -2px;
-      transform: rotate(180deg);
-      transition-delay: 0.4s;
-    }
-
-    &:nth-child(4) {
-      bottom: -2px;
-      left: -2px;
-      transform: rotate(-90deg);
-      transition-delay: 0.6s;
-    }
-  }
-
-  &:hover {
-    span:nth-child(1) {
-      transform: rotate(180deg);
-      background: transparent;
-    }
-
-    span:nth-child(2) {
-      transform: rotate(270deg);
-      background: transparent;
-    }
-
-    span:nth-child(3) {
-      transform: rotate(0deg);
-      background: transparent;
-    }
-
-    span:nth-child(4) {
-      transform: rotate(90deg);
-      background: transparent;
     }
   }
 }

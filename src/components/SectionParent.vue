@@ -1,9 +1,13 @@
 <template>
   <section>
-    <form-name :parent="parent" @add="addName" />
+    <form-name
+      :parent="parent"
+      @add="addName"
+      :namesForChoose="namesForChoose"
+    />
     <template v-if="hasNames">
       <h2 :class="[$style.title, $style[`title_${parent}`]]">
-        {{ titleTable }}
+        Список имен от {{ titleTable }}
       </h2>
       <table-names :names="names" :parent="parent" @delete="deleteName" />
     </template>
@@ -14,11 +18,11 @@
 </template>
 
 <script>
-import FormName from './FormName.vue';
-import TableNames from './TableNames.vue';
+import FormName from "./FormName.vue";
+import TableNames from "./TableNames.vue";
 
 export default {
-  components: { FormName, TableNames},
+  components: { FormName, TableNames },
   props: {
     parent: {
       type: String,
@@ -28,21 +32,24 @@ export default {
       type: Array,
       required: true,
     },
+    namesForChoose: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     titleTable() {
       if (this.parent === "dad") {
-        return "Имена от папы";
+        return "папы";
       }
-      return "Имена от мамы";
+      return "мамы";
     },
-    hasNames(){
-      return this.names.length > 0
+    hasNames() {
+      return this.names.length > 0;
     },
   },
   methods: {
     addName(name) {
-      console.log(this.names.length);
       this.$emit("add", name);
     },
     deleteName(name) {
@@ -56,6 +63,7 @@ export default {
 .title {
   margin-top: 16px;
   @include font-size(32, 38);
+  font-weight: 800;
   text-align: center;
 
   &_mom {

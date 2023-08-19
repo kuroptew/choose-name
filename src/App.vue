@@ -1,14 +1,23 @@
 <template>
   <div :class="$style.container">
-    <h1 :class="$style.title">Выбираем имя ребенку</h1>
+    <section :class="$style['section-hero']">
+      <h1 :class="$style.title">Выбираем имя ребенку</h1>
+      <p :class="$style.text">
+        Это приложение создано для выбора имена ребенка. Родителя добавляют
+        имена в свои списки и на их основании фомируется общий список имен для
+        ребенка.
+      </p>
+    </section>
     <section :class="$style['section-parents']">
       <section-parent
+        :namesForChoose="namesForChoose"
         :names="namesByMom"
         :parent="'mom'"
         @delete="deleteNameByMom"
         @add="addNameByMom"
       />
       <section-parent
+        :namesForChoose="namesForChoose"
         :names="namesByDad"
         :parent="'dad'"
         @delete="deleteNameByDad"
@@ -24,6 +33,7 @@ import SectionParent from "./components/SectionParent.vue";
 import SectionChild from "./components/SectionChild.vue";
 
 import { addNewName, getNames, deleteName } from "./api";
+import names from "./assets/names.json";
 
 export default {
   components: { SectionParent, SectionChild },
@@ -31,6 +41,7 @@ export default {
     return {
       namesByMom: [],
       namesByDad: [],
+      namesForChoose: [],
     };
   },
   computed: {
@@ -82,6 +93,7 @@ export default {
   mounted() {
     this.fetchNamesByMom();
     this.fetchNamesByDad();
+    this.namesForChoose = names.map((name) => name.text);
   },
 };
 </script>
@@ -91,15 +103,26 @@ export default {
   margin: 0 auto;
   max-width: 1000px;
 }
-.title {
-  margin-bottom: 28px;
-  @include font-size(50, 60);
-  color: $black;
-  text-align: center;
+
+.section-hero {
+  .title {
+    margin-bottom: 20px;
+    @include font-size(50, 60);
+    color: $black;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  .text {
+    @include font-size(20, 24);
+    color: $white;
+    text-align: center;
+  }
 }
 
 .section-parents {
   display: flex;
   justify-content: space-between;
+  margin-top: 36px;
 }
 </style>

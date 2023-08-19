@@ -1,11 +1,125 @@
-@import 'normalize';
+@import "normalize";
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-html{
-  font-family: 'Roboto', sans-serif;
+html {
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   background-color: $beige;
+}
+
+.v-input {
+  width: 100%;
+  border-radius: 4px;
+  border: none;
+  @include font-size(12, 16);
+  color: $black;
+  background-color: $white;
+  border: none;
+  outline: none;
+}
+
+.v-input--horizontal {
+  color: $beige;
+}
+
+.v-field--variant-filled {
+  background-color: inherit;
+}
+
+.v-input-control {
+  height: 100%;
+}
+
+.v-filed {
+  padding: 0;
+  font-size: 12px;
+}
+
+.v-input__details {
+  min-height: 0;
+  color: red;
+}
+
+.v-field__input {
+  color: $black;
+  display: block;
+  outline-color: $dark-pink;
+  opacity: var(--v-high-emphasis-opacity);
+  min-height: 32px;
+  max-height: 32px;
+  min-width: 0;
+  padding-inline-start: 8px;
+  padding-inline-end: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.v-input--density-default {
+  --v-input-control-height: 32px;
+  --v-input-padding-top: 15px;
+}
+
+//.v-field--appended {
+//  padding-inline-end: 0;
+//}
+
+.v-messages {
+  min-height: 0;
+}
+
+.v-text-field .v-input__details {
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+.v-input__details {
+  padding-top: 0;
+}
+.v-field__input {
+  input {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: normal;
+    font-weight: 500;
+  }
+}
+
+.v-autocomplete__selection-text {
+  @include font-size(12, 16);
+  --v-field-padding-start: 0;
+  --v-field-padding-end: 0;
+  --v-field-padding-top: 0;
+  --v-field-padding-bottom: 0;
+  --v-field-input-padding-top: 0;
+  --v-field-input-padding-bottom: 0;
+}
+
+.v-field {
+  display: grid;
+  grid-template-areas: "prepend-inner field clear append-inner";
+  grid-template-columns: min-content minmax(0, 1fr) min-content min-content;
+  font-size: 16px;
+  letter-spacing: 0.009375em;
+  max-width: 100%;
+  border-radius: 4px;
+  contain: layout;
+  flex: 1 0;
+  grid-area: control;
+  position: relative;
+  --v-field-padding-start: 16px;
+  --v-field-padding-end: 16px;
+  --v-field-padding-top: 10px;
+  --v-field-padding-bottom: 5px;
+  --v-field-input-padding-top: 4px;
+}
+
+.v-list-item {
+  color: $black;
+
+  &:hover {
+    background-color: $beige;
+  }
 }
