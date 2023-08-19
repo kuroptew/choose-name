@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://my-json-server.typicode.com/kuroptew/child-names/";
+const BASE_URL = "https://64e07f6b50713530432c5c90.mockapi.io";
 
 export async function getNames(namesBy) {
   try {
