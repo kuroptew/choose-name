@@ -26,3 +26,4 @@ export async function deleteName(namesBy, name) {
     alert(e);
   }
 }
+

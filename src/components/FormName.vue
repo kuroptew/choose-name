@@ -7,12 +7,15 @@
       color="$pink"
       placeholder="Введите имя"
       v-model="name.value"
+      :menu-props="{ closeOnContentClick: true }"
+      @keydown="enterName"
+      ref="inputName"
     >
     </v-autocomplete>
     <input
       type="text"
       :class="$style.input"
-      placeholder="Введите Ваш рейтинг имени"
+      placeholder="Введите рейтинг имени"
       v-model.number="name.rating"
     />
     <button-add-name :disabled="!formValid" @click="addName" :parent="parent" />
@@ -58,8 +61,11 @@ export default {
     },
   },
   methods: {
-    updateName(name) {
-      this.name.value = name;
+    enterName(event) {
+      if (event.key === "Enter") {
+        this.$refs.inputName.menu = false;
+        this.name.value = event.target.value
+      }
     },
     addName() {
       if (this.formValid) {
@@ -86,6 +92,9 @@ export default {
   align-items: center;
   gap: 20px;
   border-radius: 20px;
+  box-shadow: 8px 8px 16px rgba($black, 0.5);
+
+
   &_mom {
     background-color: $pink;
   }
@@ -125,7 +134,7 @@ export default {
     }
 
     &::placeholder {
-      color: $beige;
+      color: rgba($black, 0.3);
     }
   }
 }

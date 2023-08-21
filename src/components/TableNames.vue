@@ -49,6 +49,7 @@ export default {
   border-radius: 20px;
   margin-top: 24px;
   flex-direction: column;
+  box-shadow: 8px 8px 16px rgba($black, 0.5);
   &_mom {
     background-color: $pink;
   }
@@ -59,11 +60,13 @@ export default {
   thead {
     display: block;
     width: 100%;
+    margin-bottom: 12px;
     color: $white;
 
     th {
       display: inline-block;
       width: 33%;
+      text-shadow: 2px 2px 4px $black;
     }
   }
 }

@@ -27,35 +27,37 @@ export default {
   width: 160px;
   justify-content: center;
   align-items: center;
+  @include font-size(16,20);
+  font-weight: 600;
   text-decoration: none;
   outline: none;
-  background-color: inherit;
+  background-color: $white;
   cursor: pointer;
 
   span:nth-child(1) {
     top: -2px;
-      left: -2px;
+    left: -2px;
     transform: rotate(180deg);
     background: transparent;
   }
 
   span:nth-child(2) {
     top: -2px;
-      right: -2px;
+    right: -2px;
     transform: rotate(270deg);
     background: transparent;
   }
 
   span:nth-child(3) {
     bottom: -2px;
-      right: -2px;
+    right: -2px;
     transform: rotate(0deg);
     background: transparent;
   }
 
   span:nth-child(4) {
     bottom: -2px;
-      left: -2px;
+    left: -2px;
     transform: rotate(90deg);
     background: transparent;
   }

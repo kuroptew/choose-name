@@ -117,6 +117,7 @@ export default {
     @include font-size(20, 24);
     color: $white;
     text-align: center;
+    text-shadow: 2px 2px 4px $black;
   }
 }
 
