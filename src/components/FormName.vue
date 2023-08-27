@@ -1,30 +1,73 @@
 <template>
   <form @submit.prevent :class="[$style.form, $style[`form_${parent}`]]">
     <h3 :class="[$style.title, $style[`title_${parent}`]]">{{ titleForm }}</h3>
-    <v-autocomplete
-      :items="namesForChoose"
-      variant="outlined"
-      color="$pink"
-      placeholder="Введите имя"
-      v-model="name.value"
-      :menu-props="{ closeOnContentClick: true }"
-      @keydown="enterName"
-      ref="inputName"
-    >
-    </v-autocomplete>
-    <input
-      type="text"
-      :class="$style.input"
-      placeholder="Введите рейтинг имени"
-      v-model.number="name.rating"
-    />
+    <div :class="$style['input-wrapper']">
+      <label :class="$style.label" :for="`${parent}-name`"> Имя </label>
+      <v-autocomplete
+        :items="namesForChoose"
+        variant="outlined"
+        color="$pink"
+        placeholder="Введите имя"
+        v-model="name.value"
+        :menu-props="{ closeOnContentClick: true }"
+        @keydown="enterName"
+        ref="inputName"
+        :id="`${parent}-name`"
+      >
+      </v-autocomplete>
+    </div>
+    <div :class="$style['input-wrapper']">
+      <label :class="$style.label" :for="`${parent}-rating`">Рейтинг</label>
+      <input
+        :id="`${parent}-rating`"
+        type="text"
+        :class="$style.input"
+        placeholder="Введите рейтинг имени"
+        v-model.number="name.rating"
+      />
+    </div>
+    <div :class="$style['input-wrapper']">
+      <div :class="$style['radio-wrapper']">
+        <input
+          :class="[$style['input-radio'], $style['input-radio_boy']]"
+          type="radio"
+          :id="`${parent}-boy`"
+          value="m"
+          v-model="name.gender"
+        />
+        <label :for="`${parent}-boy`">Для мальчика</label>
+      </div>
+
+      <div :class="$style['radio-wrapper']">
+        <input
+          :class="[$style['input-radio'], $style['input-radio_girl']]"
+          type="radio"
+          :id="`${parent}-girl`"
+          value="g"
+          v-model="name.gender"
+        />
+        <label :for="`${parent}-girl`">Для девочки</label>
+      </div>
+
+      <div :class="$style['radio-wrapper']">
+        <input
+          :class="[$style['input-radio'], $style['input-radio_universal']]"
+          type="radio"
+          :id="`${parent}-universal`"
+          value="u"
+          v-model="name.gender"
+        />
+        <label :for="`${parent}-universal`">Универсальное</label>
+      </div>
+    </div>
+
     <button-add-name :disabled="!formValid" @click="addName" :parent="parent" />
   </form>
 </template>
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { VAutocomplete } from "vuetify/components";
+
 
 import ButtonAddName from "./ButtonAddName.vue";
 
@@ -45,6 +88,7 @@ export default {
       name: {
         value: null,
         rating: "",
+        gender: "m",
       },
     };
   },
@@ -64,7 +108,7 @@ export default {
     enterName(event) {
       if (event.key === "Enter") {
         this.$refs.inputName.menu = false;
-        this.name.value = event.target.value
+        this.name.value = event.target.value;
       }
     },
     addName() {
@@ -76,6 +120,7 @@ export default {
         value: null,
         rating: "",
         id: "",
+        gender: "m"
       };
     },
   },
@@ -93,7 +138,6 @@ export default {
   gap: 20px;
   border-radius: 20px;
   box-shadow: 8px 8px 16px rgba($black, 0.5);
-
 
   &_mom {
     background-color: $pink;
@@ -117,24 +161,103 @@ export default {
     }
   }
 
-  .input {
+  .input-wrapper {
     width: 100%;
-    padding-left: 8px;
-    padding-right: 8px;
-    border-radius: 4px;
-    min-height: 32px;
-    border: none;
-    @include font-size(12, 16);
-    color: $black;
-    background-color: $white;
 
-    &:focus {
-      outline: none;
-      border: 2px solid $beige;
+    .label {
+      display: block;
+      margin-bottom: 4px;
+      @include font-size(16, 20);
     }
 
-    &::placeholder {
-      color: rgba($black, 0.3);
+    .radio-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+
+      input[type="radio"],
+      label {
+        cursor: pointer;
+      }
+
+      label {
+        margin-left: 12px;
+      }
+
+      .input-radio {
+        position: relative;
+        @include box(20px);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include box(20px);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          background-color: $white;
+        }
+
+        &_boy::before {
+          border: 2px solid $dark-blue;
+        }
+
+        &_girl::before {
+          border: 2px solid $dark-pink;
+        }
+
+        &_universal::before {
+          border: 2px solid $beige;
+        }
+
+        &:checked::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include box(10px);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          visibility: visible;
+        }
+
+        &_boy:checked::after {
+          background-color: $dark-blue;
+        }
+
+        &_girl:checked::after {
+          background-color: $dark-pink;
+        }
+
+        &_universal:checked::after {
+          background-color: $beige;
+        }
+      }
+    }
+    .input {
+      width: 100%;
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: 4px;
+      min-height: 32px;
+      border: none;
+      @include font-size(12, 16);
+      color: $black;
+      background-color: $white;
+
+      &:focus {
+        outline: none;
+        border: 2px solid $beige;
+      }
+
+      &::placeholder {
+        color: rgba($black, 0.3);
+      }
     }
   }
 }
