@@ -51,13 +51,15 @@ export default {
           (nameByDad) => nameByDad.value === nameByMom.value
         );
 
-        if (indexNameByDad !== -1) {
-          const nameByDad = this.namesByDad[indexNameByDad];
+        const nameByDad = this.namesByDad[indexNameByDad];
 
+        if (nameByDad && nameByDad.gender === nameByMom.gender) {
+          
           const commonName = {
             id: nameByDad.id + nameByMom.id,
             value: nameByDad.value,
             rating: nameByDad.rating + nameByMom.rating,
+            gender: nameByDad.gender,
           };
 
           commonNames.push(commonName);

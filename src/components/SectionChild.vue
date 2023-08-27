@@ -24,6 +24,7 @@
             <thead>
               <th>Имя</th>
               <th>Рейтинг</th>
+              <th>Пол</th>
             </thead>
             <tbody>
               <tr
@@ -33,6 +34,15 @@
               >
                 <td :class="$style.name">{{ name.value }}</td>
                 <td :class="$style.rating">{{ name.rating }}</td>
+                <td v-if="name.gender === 'm'" :class="$style.gender">
+                  &#128102;
+                </td>
+                <td v-if="name.gender === 'g'" :class="$style.gender">
+                  &#128103;
+                </td>
+                <td v-if="name.gender === 'u'" :class="$style.gender">
+                  &#128102; &#128103;
+                </td>
               </tr>
             </tbody>
           </table>
@@ -151,7 +161,7 @@ export default {
 
     th {
       display: inline-block;
-      width: 50%;
+      width: 33%;
       text-shadow: 2px 2px 4px $black;
     }
   }
@@ -168,7 +178,7 @@ export default {
 
   td {
     display: inline-block;
-    width: 50%;
+    width: 33%;
     font-weight: 600;
     text-align: center;
   }
