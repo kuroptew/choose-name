@@ -67,9 +67,13 @@ export default {
     sortedAndFilteredNames() {
       switch (this.filter) {
         case "m":
-          return this.sortedNames.filter((name) => name.gender === "m");
+          return this.sortedNames.filter(
+            (name) => name.gender === "m" || name.gender === "u"
+          );
         case "g":
-          return this.sortedNames.filter((name) => name.gender === "g");
+          return this.sortedNames.filter(
+            (name) => name.gender === "g" || name.gender === "u"
+          );
         case "u":
           return this.sortedNames.filter((name) => name.gender === "u");
         default:
@@ -79,7 +83,7 @@ export default {
   },
   methods: {
     updateFilter(value) {
-      console.log(value , 'form');
+      console.log(value, "form");
       this.filter = value;
     },
   },
@@ -92,16 +96,34 @@ export default {
   padding: 40px;
   border-radius: 20px;
   background-color: $grey;
+
+  @media screen and (max-width: 760px) {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 20px;
+  }
 }
 
 .container {
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 760px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 30px;
+  }
 }
 
 .title {
   @include font-size(32, 38);
   text-align: center;
   color: $black;
+
+  @media screen and (max-width: 760px) {
+    @include font-size(20, 24);
+  }
 }
 </style>

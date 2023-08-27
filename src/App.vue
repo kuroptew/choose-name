@@ -53,14 +53,18 @@ export default {
 
         const nameByDad = this.namesByDad[indexNameByDad];
 
-        const isUniversalName = nameByDad?.gender === "u" || nameByMom.gender === "u";
+        const isUniversalName =
+          nameByDad?.gender === "u" || nameByMom.gender === "u";
 
-        if (nameByDad && (nameByDad.gender === nameByMom.gender || isUniversalName)) {
+        if (
+          nameByDad &&
+          (nameByDad.gender === nameByMom.gender || isUniversalName)
+        ) {
           const commonName = {
             id: nameByDad.id + nameByMom.id,
             value: nameByDad.value,
             rating: nameByDad.rating + nameByMom.rating,
-            gender: isUniversalName ? 'u' : nameByDad.gender,
+            gender: isUniversalName ? "u" : nameByDad.gender,
           };
 
           commonNames.push(commonName);
@@ -105,6 +109,12 @@ export default {
 .container {
   margin: 0 auto;
   max-width: 1000px;
+  padding: 60px 10px;
+
+  @media screen and (max-width: 760px) {
+    max-width: 460px;
+    padding: 20px 0;
+  }
 }
 
 .section-hero {
@@ -114,6 +124,10 @@ export default {
     color: $black;
     text-align: center;
     font-weight: 800;
+
+    @media screen and (max-width: 760px) {
+      @include font-size(25, 30);
+    }
   }
 
   .text {
@@ -121,6 +135,10 @@ export default {
     color: $white;
     text-align: center;
     text-shadow: 2px 2px 4px $black;
+
+    @media screen and (max-width: 760px) {
+      @include font-size(14, 18);
+    }
   }
 }
 
@@ -128,5 +146,13 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: 36px;
+
+  @media screen and (max-width: 760px) {
+    margin-top: 14px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 30px;
+  }
 }
 </style>

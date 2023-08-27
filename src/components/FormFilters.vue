@@ -1,7 +1,11 @@
 <template>
   <form :class="$style['form-filters']">
     <h3 :class="$style['form-filters__title']">Фильтры</h3>
-    <select :class="$style['form-filters__select']" :value="sort" @change="changeSort">
+    <select
+      :class="$style['form-filters__select']"
+      :value="sort"
+      @change="changeSort"
+    >
       <option disabled value="">Выберите из списка</option>
       <option
         v-for="option in options"
@@ -65,7 +69,7 @@
 <script>
 export default {
   props: {
-    sort:{
+    sort: {
       type: String,
     },
     options: {
@@ -73,20 +77,20 @@ export default {
       required: true,
     },
   },
-  data(){
+  data() {
     return {
-      filter: "all"
-    }
+      filter: "all",
+    };
   },
-  methods:{
-    changeSort(event){
-      this.$emit("update:sort", event.target.value)
+  methods: {
+    changeSort(event) {
+      this.$emit("update:sort", event.target.value);
     },
-    changeFilter(event){
+    changeFilter(event) {
       console.log(event.target.value);
-      this.$emit("updateFilter", event.target.value)
-    }
-  }
+      this.$emit("updateFilter", event.target.value);
+    },
+  },
 };
 </script>
 
@@ -98,129 +102,149 @@ export default {
   min-height: 200px;
   border-radius: 10px;
 
+  @media screen and (max-width: 760px) {
+    width: 100%;
+    margin-right: 0;
+  }
+
   &__title {
     margin-bottom: 12px;
-    @include font-size(14, 18);
+    @include font-size(18, 24);
     color: $black;
     text-decoration: underline;
+
+    @media screen and (max-width: 760px) {
+      @include font-size(14, 16);
+    }
   }
 
   &__select {
     padding: 4px;
     border-radius: 4px;
     border: 1px solid $beige;
+
+    @include font-size(16, 20);
+
+    @media screen and (max-width: 760px) {
+      @include font-size(12, 14);
+    }
   }
 }
 
 .input-wrapper {
-    width: 100%;
-    margin-top: 20px;
+  width: 100%;
+  margin-top: 20px;
 
-    .label {
-      display: block;
+  .label {
+    display: block;
+    margin-bottom: 4px;
+    @include font-size(16, 20);
+  }
+
+  .radio-wrapper {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
       margin-bottom: 4px;
+    }
+
+    input[type="radio"],
+    label {
+      cursor: pointer;
+    }
+
+    label {
+      margin-left: 12px;
       @include font-size(16, 20);
+
+      @media screen and (max-width: 760px) {
+        @include font-size(12, 14);
+      }
     }
 
-    .radio-wrapper {
-      display: flex;
-      align-items: center;
+    .input-radio {
+      position: relative;
+      @include box(20px);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: none;
 
-      &:not(:last-child) {
-        margin-bottom: 4px;
-      }
-
-      input[type="radio"],
-      label {
-        cursor: pointer;
-      }
-
-      label {
-        margin-left: 12px;
-      }
-
-      .input-radio {
-        position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
         @include box(20px);
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        outline: none;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          @include box(20px);
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          background-color: $white;
-        }
-
-        &_boy::before {
-          border: 2px solid $dark-blue;
-        }
-
-        &_girl::before {
-          border: 2px solid $dark-pink;
-        }
-
-        &_universal::before {
-          border: 2px solid $beige;
-        }
-
-        &_all::before {
-          border: 2px solid $black;
-        }
-
-        &:checked::after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          @include box(10px);
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          visibility: visible;
-        }
-
-        &_boy:checked::after {
-          background-color: $dark-blue;
-        }
-
-        &_girl:checked::after {
-          background-color: $dark-pink;
-        }
-
-        &_universal:checked::after {
-          background-color: $beige;
-        }
-
-        &_all:checked::after {
-          background-color: $black;
-        }
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $white;
       }
-    }
-    .input {
-      width: 100%;
-      padding-left: 8px;
-      padding-right: 8px;
-      border-radius: 4px;
-      min-height: 32px;
-      border: none;
-      @include font-size(12, 16);
-      color: $black;
-      background-color: $white;
 
-      &:focus {
-        outline: none;
+      &_boy::before {
+        border: 2px solid $dark-blue;
+      }
+
+      &_girl::before {
+        border: 2px solid $dark-pink;
+      }
+
+      &_universal::before {
         border: 2px solid $beige;
       }
 
-      &::placeholder {
-        color: rgba($black, 0.3);
+      &_all::before {
+        border: 2px solid $black;
+      }
+
+      &:checked::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include box(10px);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        visibility: visible;
+      }
+
+      &_boy:checked::after {
+        background-color: $dark-blue;
+      }
+
+      &_girl:checked::after {
+        background-color: $dark-pink;
+      }
+
+      &_universal:checked::after {
+        background-color: $beige;
+      }
+
+      &_all:checked::after {
+        background-color: $black;
       }
     }
   }
+  .input {
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px;
+    min-height: 32px;
+    border: none;
+    @include font-size(12, 16);
+    color: $black;
+    background-color: $white;
+
+    &:focus {
+      outline: none;
+      border: 2px solid $beige;
+    }
+
+    &::placeholder {
+      color: rgba($black, 0.3);
+    }
+  }
+}
 </style>

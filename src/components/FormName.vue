@@ -138,6 +138,13 @@ export default {
   border-radius: 20px;
   box-shadow: 8px 8px 16px rgba($black, 0.5);
 
+  @media screen and (max-width: 760px) {
+    max-width: 300px;
+    padding: 12px 8px;
+    border-radius: 10px;
+    gap: 8px;
+  }
+
   &_mom {
     background-color: $pink;
   }
@@ -150,6 +157,10 @@ export default {
     @include font-size(28, 32);
     font-weight: 700;
     color: $white;
+
+    @media screen and (max-width: 760px) {
+      @include font-size(20, 24);
+    }
 
     &_mom {
       color: $dark-pink;
@@ -167,6 +178,10 @@ export default {
       display: block;
       margin-bottom: 4px;
       @include font-size(16, 20);
+
+      @media screen and (max-width: 760px) {
+        @include font-size(12, 14);
+      }
     }
 
     .radio-wrapper {
@@ -184,6 +199,11 @@ export default {
 
       label {
         margin-left: 12px;
+        @include font-size(16, 20);
+
+        @media screen and (max-width: 760px) {
+          @include font-size(12, 14);
+        }
       }
 
       .input-radio {

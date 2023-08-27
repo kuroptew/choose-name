@@ -13,10 +13,12 @@
       >
         <td :class="$style.name">{{ name.value }}</td>
         <td :class="$style.rating">{{ name.rating }}</td>
-      
+
         <td v-if="name.gender === 'm'" :class="$style.gender">&#128102;</td>
         <td v-if="name.gender === 'g'" :class="$style.gender">&#128103;</td>
-        <td v-if="name.gender === 'u'" :class="$style.gender">&#128102; &#128103;</td>
+        <td v-if="name.gender === 'u'" :class="$style.gender">
+          &#128102; &#128103;
+        </td>
         <td>
           <button @click="deleteName(name)" :class="$style['button-delete']">
             Удалить
@@ -50,11 +52,18 @@ export default {
 <style lang="scss" module>
 .table-names {
   display: flex;
+  margin-top: 24px;
   padding: 20px;
   border-radius: 20px;
-  margin-top: 24px;
   flex-direction: column;
   box-shadow: 8px 8px 16px rgba($black, 0.5);
+
+  @media screen and (max-width: 760px) {
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 10px;
+  }
+
   &_mom {
     background-color: $pink;
   }
@@ -68,10 +77,19 @@ export default {
     margin-bottom: 12px;
     color: $white;
 
+    @media screen and (max-width: 760px) {
+      margin-bottom: 8px;
+    }
+
     th {
       display: inline-block;
       width: 25%;
       text-shadow: 2px 2px 4px $black;
+      @include font-size(16, 24);
+
+      @media screen and (max-width: 760px) {
+        @include font-size(14, 18);
+      }
     }
   }
 }
@@ -116,8 +134,13 @@ export default {
 
 .name,
 .rating,
-.button-delete {
-  @include font-size(16, 20);
+.button-delete,
+.gender {
+  @include font-size(16, 24);
+
+  @media screen and (max-width: 760px) {
+    @include font-size(14, 18);
+  }
 }
 
 .button-delete {

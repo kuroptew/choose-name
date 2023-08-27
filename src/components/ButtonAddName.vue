@@ -27,12 +27,18 @@ export default {
   width: 160px;
   justify-content: center;
   align-items: center;
-  @include font-size(16,20);
+  @include font-size(16, 20);
   font-weight: 600;
   text-decoration: none;
   outline: none;
   background-color: $white;
   cursor: pointer;
+
+  @media screen and (max-width: 760px) {
+    padding: 8px;
+    width: 120px;
+    @include font-size(14, 16);
+  }
 
   span:nth-child(1) {
     top: -2px;
@@ -84,9 +90,12 @@ export default {
 
   span {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    @include box(10px);
     transition: 0.5s;
+
+    @media screen and (max-width:760px) {
+      @include box(6px);
+    }
   }
 
   &_mom {

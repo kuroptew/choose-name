@@ -35,11 +35,11 @@ export default {
       required: true,
     },
   },
-  computed:{
+  computed: {
     hasNames() {
       return this.names.length > 0;
     },
-  }
+  },
 };
 </script>
 
@@ -48,10 +48,15 @@ export default {
   @include font-size(32, 38);
   text-align: center;
   color: $black;
+
+  @media screen and (max-width: 760px) {
+    @include font-size(20, 24);
+  }
 }
 
 .names-list {
   margin: 0 auto;
+  width: 100%;
 }
 
 .table-names {
@@ -70,6 +75,12 @@ export default {
       display: inline-block;
       width: 33%;
       text-shadow: 2px 2px 4px $black;
+
+      @include font-size(16, 24);
+
+      @media screen and (max-width: 760px) {
+        @include font-size(14, 18);
+      }
     }
   }
 }
@@ -88,6 +99,16 @@ export default {
     width: 33%;
     font-weight: 600;
     text-align: center;
+  }
+
+  .name,
+  .rating,
+  .gender {
+    @include font-size(16, 24);
+
+    @media screen and (max-width: 760px) {
+      @include font-size(14, 18);
+    }
   }
 }
 </style>

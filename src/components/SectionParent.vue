@@ -66,6 +66,11 @@ export default {
   font-weight: 800;
   text-align: center;
 
+  @media screen and (max-width: 760px) {
+    margin-top: 8px;
+    @include font-size(20, 24);
+  }
+
   &_mom {
     color: $dark-pink;
   }
