@@ -68,7 +68,6 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 
-
 import ButtonAddName from "./ButtonAddName.vue";
 
 export default {
@@ -120,7 +119,7 @@ export default {
         value: null,
         rating: "",
         id: "",
-        gender: "m"
+        gender: "m",
       };
     },
   },
@@ -173,7 +172,10 @@ export default {
     .radio-wrapper {
       display: flex;
       align-items: center;
-      margin-bottom: 4px;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
 
       input[type="radio"],
       label {

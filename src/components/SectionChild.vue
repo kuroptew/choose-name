@@ -2,51 +2,12 @@
   <section :class="$style['section-child']">
     <template v-if="hasNames">
       <div :class="$style.container">
-        <form :class="$style['form-filters']">
-          <h3 :class="$style['form-filters__title']">Фильтры</h3>
-          <select
-            :class="$style['form-filters__select']"
-            v-model="selectedSort"
-          >
-            <option disabled value="">Выберите из списка</option>
-            <option
-              v-for="option in options"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.name }}
-            </option>
-          </select>
-        </form>
-        <div :class="$style['names-list']">
-          <h2 :class="$style.title">Список общих имен</h2>
-          <table :class="$style['table-names']">
-            <thead>
-              <th>Имя</th>
-              <th>Рейтинг</th>
-              <th>Пол</th>
-            </thead>
-            <tbody>
-              <tr
-                v-for="name in sortedNames"
-                :key="name.value"
-                :class="$style['item-name']"
-              >
-                <td :class="$style.name">{{ name.value }}</td>
-                <td :class="$style.rating">{{ name.rating }}</td>
-                <td v-if="name.gender === 'm'" :class="$style.gender">
-                  &#128102;
-                </td>
-                <td v-if="name.gender === 'g'" :class="$style.gender">
-                  &#128103;
-                </td>
-                <td v-if="name.gender === 'u'" :class="$style.gender">
-                  &#128102; &#128103;
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <form-filters
+          :options="options"
+          v-model:sort="selectedSort"
+          @updateFilter="updateFilter"
+        />
+        <list-common-names :names="sortedAndFilteredNames" />
       </div>
     </template>
     <h2 v-else :class="$style.title">Общих имен нет</h2>
@@ -54,7 +15,11 @@
 </template>
 
 <script>
+import FormFilters from "./FormFilters.vue";
+import ListCommonNames from "./ListCommonNames.vue";
+
 export default {
+  components: { ListCommonNames, FormFilters },
   data() {
     return {
       options: [
@@ -64,6 +29,7 @@ export default {
         { value: "По возрастанию рейтинга", name: "По возрастанию рейтинга" },
       ],
       selectedSort: "",
+      filter: "all",
     };
   },
   props: {
@@ -79,12 +45,10 @@ export default {
     sortedNames() {
       switch (this.selectedSort) {
         case "По алфавиту А-Я":
-          console.log("А-Я");
           return [...this.names].sort((name1, name2) =>
             name1.value.localeCompare(name2.value)
           );
         case "По алфавиту Я-А":
-          console.log("Z-A");
           return [...this.names]
             .sort((name1, name2) => name1.value.localeCompare(name2.value))
             .reverse();
@@ -99,6 +63,24 @@ export default {
         default:
           return this.names;
       }
+    },
+    sortedAndFilteredNames() {
+      switch (this.filter) {
+        case "m":
+          return this.sortedNames.filter((name) => name.gender === "m");
+        case "g":
+          return this.sortedNames.filter((name) => name.gender === "g");
+        case "u":
+          return this.sortedNames.filter((name) => name.gender === "u");
+        default:
+          return this.sortedNames;
+      }
+    },
+  },
+  methods: {
+    updateFilter(value) {
+      console.log(value , 'form');
+      this.filter = value;
     },
   },
 };
@@ -117,70 +99,9 @@ export default {
   align-items: center;
 }
 
-.form-filters {
-  background-color: #fff;
-  margin-right: 100px;
-  padding: 12px;
-  min-height: 200px;
-  border-radius: 10px;
-
-  &__title {
-    margin-bottom: 12px;
-    @include font-size(14, 18);
-    color: $black;
-    text-decoration: underline;
-  }
-
-  &__select {
-    padding: 4px;
-    border-radius: 4px;
-    border: 1px solid $beige;
-  }
-}
 .title {
   @include font-size(32, 38);
   text-align: center;
   color: $black;
-}
-
-.names-list {
-  margin: 0 auto;
-}
-
-.table-names {
-  display: flex;
-  padding: 20px;
-  border-radius: 20px;
-  margin-top: 24px;
-  flex-direction: column;
-
-  thead {
-    display: block;
-    width: 100%;
-    color: $white;
-
-    th {
-      display: inline-block;
-      width: 33%;
-      text-shadow: 2px 2px 4px $black;
-    }
-  }
-}
-
-.item-name {
-  display: block;
-  width: 100%;
-  padding: 8px 0;
-  color: black;
-  &:not(:last-child) {
-    border-bottom: 2px solid $black;
-  }
-
-  td {
-    display: inline-block;
-    width: 33%;
-    font-weight: 600;
-    text-align: center;
-  }
 }
 </style>
