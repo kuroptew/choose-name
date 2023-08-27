@@ -3,7 +3,7 @@
     <section :class="$style['section-hero']">
       <h1 :class="$style.title">Выбираем имя ребенку</h1>
       <p :class="$style.text">
-        Это приложение создано для выбора имена ребенка. Родителя добавляют
+        Это приложение создано для выбора имени ребенка. Родители добавляют
         имена в свои списки и на их основании фомируется общий список имен для
         ребенка.
       </p>
@@ -53,13 +53,14 @@ export default {
 
         const nameByDad = this.namesByDad[indexNameByDad];
 
-        if (nameByDad && nameByDad.gender === nameByMom.gender) {
-          
+        const isUniversalName = nameByDad?.gender === "u" || nameByMom.gender === "u";
+
+        if (nameByDad && (nameByDad.gender === nameByMom.gender || isUniversalName)) {
           const commonName = {
             id: nameByDad.id + nameByMom.id,
             value: nameByDad.value,
             rating: nameByDad.rating + nameByMom.rating,
-            gender: nameByDad.gender,
+            gender: isUniversalName ? 'u' : nameByDad.gender,
           };
 
           commonNames.push(commonName);
