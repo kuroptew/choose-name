@@ -107,7 +107,7 @@ export default {
         this.isLoading = false;
       });
       this.namesForChoose = names.map((name) => name.text);
-    }, 3000);
+    }, 300);
   },
 };
 </script>
