@@ -11,6 +11,7 @@
         v-model="name.value"
         :menu-props="{ closeOnContentClick: true }"
         @keydown="enterName"
+        no-data-text="Имени в списке нет"
         ref="inputName"
         :id="`${parent}-name`"
       >
@@ -105,7 +106,7 @@ export default {
   },
   methods: {
     enterName(event) {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" || event.key === "Tab") {
         this.$refs.inputName.menu = false;
         this.name.value = event.target.value;
       }
