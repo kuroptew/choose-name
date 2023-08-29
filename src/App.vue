@@ -101,10 +101,13 @@ export default {
     },
   },
   mounted() {
-    //this.namesForChoose = names.map((name) => name.text);
-    Promise.all([this.fetchNamesByMom(), this.fetchNamesByDad()]).then(()=>{
-      this.isLoading = false
-    })
+    //Имитация долгой загрузки, похоршему надо массив имен из json получать с сервера, поэтому в реальности загрузка приложения будет идти долго
+    setTimeout(() => {
+      Promise.all([this.fetchNamesByMom(), this.fetchNamesByDad()]).then(() => {
+        this.isLoading = false;
+      });
+      this.namesForChoose = names.map((name) => name.text);
+    }, 3000);
   },
 };
 </script>
