@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.container">
+  <div v-if="!isLoading" :class="$style.container">
     <section :class="$style['section-hero']">
       <h1 :class="$style.title">Выбираем имя ребенку</h1>
       <p :class="$style.text">
@@ -26,22 +26,25 @@
     </section>
     <section-child :names="commonNames" />
   </div>
+  <loader v-else />
 </template>
 
 <script>
 import SectionParent from "./components/SectionParent.vue";
 import SectionChild from "./components/SectionChild.vue";
+import Loader from "./components/Loader.vue";
 
 import { addNewName, getNames, deleteName } from "./api";
 import names from "./assets/names.json";
 
 export default {
-  components: { SectionParent, SectionChild },
+  components: { SectionParent, SectionChild, Loader },
   data() {
     return {
       namesByMom: [],
       namesByDad: [],
       namesForChoose: [],
+      isLoading: true,
     };
   },
   computed: {
@@ -98,9 +101,10 @@ export default {
     },
   },
   mounted() {
-    this.fetchNamesByMom();
-    this.fetchNamesByDad();
-    this.namesForChoose = names.map((name) => name.text);
+    //this.namesForChoose = names.map((name) => name.text);
+    Promise.all([this.fetchNamesByMom(), this.fetchNamesByDad()]).then(()=>{
+      this.isLoading = false
+    })
   },
 };
 </script>
