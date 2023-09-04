@@ -9,7 +9,10 @@
         color="$pink"
         placeholder="Введите имя"
         v-model="name.value"
-        :menu-props="{ closeOnContentClick: true }"
+        :menu-props="{
+          closeOnContentClick: true,
+          maxHeight: 250,
+        }"
         @keydown="enterName"
         no-data-text="Имени в списке нет"
         ref="inputName"
