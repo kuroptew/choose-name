@@ -13,7 +13,6 @@
         @keydown="enterName"
         no-data-text="Имени в списке нет"
         ref="inputName"
-        menu="true"
         :id="`${parent}-name`"
       >
       </v-autocomplete>
@@ -106,12 +105,12 @@ export default {
     },
   },
   methods: {
-    //enterName(event) {
-    //  if (event.key === "Enter" || event.key === "Tab") {
-    //    this.$refs.inputName.menu = false;
-    //    this.name.value = event.target.value;
-    //  }
-    //},
+    enterName(event) {
+      if (event.key === "Enter" || event.key === "Tab") {
+        this.$refs.inputName.menu = false;
+        this.name.value = event.target.value;
+      }
+    },
     addName() {
       if (this.formValid) {
         this.name.id = uuidv4();
