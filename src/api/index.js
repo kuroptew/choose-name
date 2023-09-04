@@ -23,8 +23,8 @@ export async function deleteName(namesBy, name) {
   try {
     //Пришлось сделать через GET запрос, поскольку mockApi задает свои id, а не id которые приходят из формы, что потом мешает удалять
     //С норм апи id на серваке и из формы должны совпадать
-    const {data: names} = await axios.get(`${BASE_URL}/${namesBy}`);
-    const foundName = await names.find(n=>name.value === n.value)
+    const { data: names } = await axios.get(`${BASE_URL}/${namesBy}`);
+    const foundName = await names.find((n) => name.value === n.value);
     await axios.delete(`${BASE_URL}/${namesBy}/${foundName.id}`);
   } catch (e) {
     alert(e);

@@ -121,9 +121,9 @@ export default {
   &__select {
     padding: 4px;
     border-radius: 4px;
-    border: 1px solid $beige;
-
     @include font-size(16, 20);
+    color: $black;
+    border: 1px solid $beige;
 
     @media screen and (max-width: 760px) {
       @include font-size(12, 14);
