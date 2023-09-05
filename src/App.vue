@@ -78,10 +78,22 @@ export default {
   },
   methods: {
     addNameByMom(name) {
+      const indexNameInList = this.namesByMom.findIndex((n) => n.value === name.value);
+      const nameInList = indexNameInList !== -1;
+      if(nameInList) {
+        deleteName("namesByMom", name);
+        this.namesByMom.splice(indexNameInList, 1)
+      }
       this.namesByMom.push(name);
       addNewName("namesByMom", name);
     },
     addNameByDad(name) {
+      const indexNameInList = this.namesByDad.findIndex((n) => n.value === name.value);
+      const nameInList = indexNameInList !== -1;
+      if(nameInList) {
+        deleteName("namesByDad", name);
+        this.namesByDad.splice(indexNameInList, 1)
+      }
       this.namesByDad.push(name);
       addNewName("namesByDad", name);
     },

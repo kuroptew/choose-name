@@ -37,6 +37,7 @@
         v-model.number="name.rating"
         @blur="onBlurRating"
         @focus="onFocusRating"
+        ref="inputRating"
       />
       <span
         v-if="showErrorRating && isInvalidRating"
@@ -168,6 +169,10 @@ export default {
         id: "",
         gender: "m",
       };
+      this.$refs.inputName.blur();
+      this.$refs.inputRating.blur();
+      this.showErrorName = false;
+      this.showErrorRating = false;
     },
     onBlurName() {
       this.showErrorName = true;
