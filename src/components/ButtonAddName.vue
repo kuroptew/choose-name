@@ -93,7 +93,7 @@ export default {
     @include box(10px);
     transition: 0.5s;
 
-    @media screen and (max-width:760px) {
+    @media screen and (max-width: 760px) {
       @include box(6px);
     }
   }
