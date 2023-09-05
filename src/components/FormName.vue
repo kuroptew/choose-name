@@ -17,8 +17,15 @@
         no-data-text="Имени в списке нет"
         ref="inputName"
         :id="`${parent}-name`"
+        @blur="onBlurName"
+        @focus="onFocusName"
       >
       </v-autocomplete>
+      <span
+        v-if="showErrorName && isInvalidName"
+        :class="$style['error-message']"
+        >{{ errorMessageName }}</span
+      >
     </div>
     <div :class="$style['input-wrapper']">
       <label :class="$style.label" :for="`${parent}-rating`">Рейтинг</label>
@@ -28,7 +35,14 @@
         :class="$style.input"
         placeholder="Введите рейтинг имени"
         v-model.number="name.rating"
+        @blur="onBlurRating"
+        @focus="onFocusRating"
       />
+      <span
+        v-if="showErrorRating && isInvalidRating"
+        :class="$style['error-message']"
+        >{{ errorMessageRating }}</span
+      >
     </div>
     <div :class="$style['input-wrapper']">
       <div :class="$style['radio-wrapper']">
@@ -93,18 +107,47 @@ export default {
         rating: "",
         gender: "m",
       },
+      showErrorName: false,
+      showErrorRating: false,
     };
   },
   computed: {
     formValid() {
-      if (!this.name.value) return false;
-      return this.name.value.length >= 2 && this.name.rating >= 1;
+      return !this.isInvalidName && !this.isInvalidRating;
     },
     titleForm() {
       if (this.parent === "dad") {
         return "Имя от папы";
       }
       return "Имя от мамы";
+    },
+    errorMessageName() {
+      if (this.name.value === null || this.name.value.length === 0) {
+        return "Поле обязательное для заполнения";
+      }
+
+      if (this.name.value.length < 2) {
+        return "Имя должно содержать не менее 2 символов";
+      }
+
+      return "";
+    },
+    errorMessageRating() {
+      if (!this.name.rating) {
+        return "Поле обязательное для заполнения";
+      }
+
+      if (this.name.rating < 2 || this.name.rating > 10) {
+        return "Рейтинг должен быть от 1 до 10";
+      }
+
+      return "";
+    },
+    isInvalidName() {
+      return this.errorMessageName.length > 0;
+    },
+    isInvalidRating() {
+      return this.errorMessageRating.length > 0;
     },
   },
   methods: {
@@ -126,6 +169,18 @@ export default {
         gender: "m",
       };
     },
+    onBlurName() {
+      this.showErrorName = true;
+    },
+    onFocusName() {
+      this.showErrorName = false;
+    },
+    onBlurRating() {
+      this.showErrorRating = true;
+    },
+    onFocusRating() {
+      this.showErrorRating = false;
+    },
   },
 };
 </script>
@@ -138,7 +193,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
   border-radius: 20px;
   box-shadow: 8px 8px 16px rgba($black, 0.5);
 
@@ -146,7 +201,7 @@ export default {
     max-width: 300px;
     padding: 12px 8px;
     border-radius: 10px;
-    gap: 8px;
+    gap: 24px;
   }
 
   &_mom {
@@ -176,6 +231,7 @@ export default {
   }
 
   .input-wrapper {
+    position: relative;
     width: 100%;
 
     .label {
@@ -283,6 +339,17 @@ export default {
 
       &::placeholder {
         color: rgba($black, 0.3);
+      }
+    }
+
+    .error-message {
+      position: absolute;
+      bottom: -18px;
+      left: 0px;
+      @include font-size(12, 14);
+      color: $red;
+      @media screen and (max-width: 760px) {
+        bottom: -16px;
       }
     }
   }
